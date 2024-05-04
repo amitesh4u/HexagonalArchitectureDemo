@@ -1,4 +1,4 @@
-package com.amitesh;
+package com.amitesh.shop.model;
 
 public class Main {
 
