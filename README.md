@@ -35,7 +35,7 @@ The application will be developed in following steps:
 The source code has four modules:
 * `model` - It contains the domain models
 * `application` - It contains the domain services and the ports
-* `adapters` - It contains the adapters like REST, In-memory and JPA
+* `adapter` - It contains the adapters like REST, In-memory and JPA
 * `boostrap` - It contains the configuration and bootstrapping logic like instantiating adapters/domain services and running Undertow web server
 
 The following diagram shows the final hexagonal architecture of the application along with the source code modules.
