@@ -44,3 +44,14 @@ The following diagram shows the final hexagonal architecture of the application 
 
 ![Hexagonal Architecture Modules](documents/hexagonal-architecture-modules.png)
 Image source :www.happycoders.eu
+
+## Lombok annotations used in project
+* **@RequiredArgsConstructor** - Generates constructor that take one argument per final / non-nullfield
+* **@AllArgsConstructor** - Generates constructor that take one argument for every field.
+* **@Data** - A shortcut for @ToString, @EqualsAndHashCode, @Getter on all fields, and @Setter on all non-final fields, and @RequiredArgsConstructor!
+* **@Accessors** 
+* * **fluent** – A boolean. If true, the getter for pepper is just pepper(), and the setter is pepper(T newValue). Furthermore, unless specified, chain defaults to true.
+  Default: false.
+* * **chain** – A boolean. If true, generated setters return this instead of void.
+  Default: false, unless fluent=true, then Default: true.
+* **@Getter/@Setter** - Generates getter/setter methods for the fields
