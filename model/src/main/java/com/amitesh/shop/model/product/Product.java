@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
-/* If true, the getter for pepper is just pepper(), and the setter is pepper(T newValue).
-    Generated setters return this instead of void.
- */
 @Accessors(fluent = true)
 @AllArgsConstructor
 public class Product {

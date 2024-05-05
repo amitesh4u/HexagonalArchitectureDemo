@@ -7,12 +7,16 @@ import com.amitesh.shop.model.product.ProductId;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 @Accessors(fluent = true)
 @RequiredArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Cart {
 
   @Getter

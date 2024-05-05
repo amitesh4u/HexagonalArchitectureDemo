@@ -2,6 +2,19 @@
 
 This project contains a simple Java/Spring Boot application implemented according to hexagonal architecture in multiple steps.
 
+## Technologies used
+* **JDK 21** - Core language
+* **Spring boot 3** - Application framework
+* **Junit5** - Unit Testing
+* **Mockito** - Mocking objects while Unit testing
+* **AssertJ** - Simple assertion style while Unit testing
+* **Lombok** - Auto generates boilerplate code for POJOs
+* **Hibernate** - Persistence Framework
+* **MySql** - Database 
+* **Jacoco** - Testing Code Coverage
+* **Sonar** - Analyze bugs and issues
+
+
 ## What is a Hexagonal Architecture?
 Alistair Cockburn introduced the hexagonal software architecture as follows
 * All non-technical business logic must reside in Application core and must be invoked by User, External application or automated Tests without any difference.
@@ -55,3 +68,5 @@ Image source :www.happycoders.eu
 * * **chain** – A boolean. If true, generated setters return this instead of void.
   Default: false, unless fluent=true, then Default: true.
 * **@Getter/@Setter** - Generates getter/setter methods for the fields
+* **@ToString** - Generates a toString method for the class
+* **@EqualsAndHashCode** - Generates hashCode and equals implementations from the fields of your object
