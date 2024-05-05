@@ -11,4 +11,14 @@
 
   <artifactId>application</artifactId>
 
+
+  <dependencies>
+    <!-- Added dependency of model module -->
+    <dependency>
+      <groupId>com.amitesh</groupId>
+      <artifactId>model</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
 </project>
