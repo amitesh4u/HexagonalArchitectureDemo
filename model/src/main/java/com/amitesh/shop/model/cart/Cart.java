@@ -24,7 +24,7 @@ public class Cart {
 
   private final Map<ProductId, CartLineItem> lineItems = new LinkedHashMap<>();
 
-  public void addProduct(final Product product, final int quantity) throws OutOfStockException {
+  public void addProduct(final Product product, final int quantity) throws InsufficientStockException {
     lineItems
         .computeIfAbsent(product.id(), absent -> new CartLineItem(product))
         .increaseQuantityBy(quantity, product.itemsInStock());

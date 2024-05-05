@@ -34,6 +34,6 @@ class ProductIdTest {
     String validId = "valid";
     ProductId productId = new ProductId(validId);
     softly.assertThat(productId).isNotNull();
-    softly.assertThat(productId.id()).isEqualTo(validId);
+    softly.assertThat(productId.value()).isEqualTo(validId);
   }
 }

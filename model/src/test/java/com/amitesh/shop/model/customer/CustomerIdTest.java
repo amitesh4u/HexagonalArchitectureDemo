@@ -24,6 +24,6 @@ class CustomerIdTest {
   void testConstructor_idIsValid_returnCustomerId() {
     int validId = 5;
     CustomerId customerId = new CustomerId(validId);
-    assertThat(customerId.id()).isEqualTo(validId);
+    assertThat(customerId.value()).isEqualTo(validId);
   }
 }

@@ -19,14 +19,14 @@ public class CartLineItem {
   private int quantity;
 
   public void increaseQuantityBy(final int augend, final int itemsInStock)
-      throws OutOfStockException {
+      throws InsufficientStockException {
     if (augend < 1) {
       throw new IllegalArgumentException("You must add at least one item");
     }
 
     int newQuantity = quantity + augend;
     if (itemsInStock < newQuantity) {
-      throw new OutOfStockException(
+      throw new InsufficientStockException(
           "Product %s has less items in stock (%d) than the requested total quantity (%d)"
               .formatted(product.id(), product.itemsInStock(), newQuantity),
           product.itemsInStock());

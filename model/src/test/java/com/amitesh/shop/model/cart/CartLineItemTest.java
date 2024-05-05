@@ -28,18 +28,18 @@ class CartLineItemTest {
   @ParameterizedTest(name = "#{index} - Run test with args={0}")
   @ValueSource(ints = {100, 150})
   void testIncreaseQuantityBy_validNewQuantity_itemOutOfStock_throwsException(int augend)
-      throws OutOfStockException {
+      throws InsufficientStockException {
     CartLineItem cartLineItem = new CartLineItem(RANDOM_PRODUCT);
     cartLineItem.increaseQuantityBy(INITIAL_CART_ITEM_QUANTITY, PRODUCT_QUANTITY_IN_STOCK);
     assertThatThrownBy(
         () -> cartLineItem.increaseQuantityBy(augend, PRODUCT_QUANTITY_IN_STOCK)
-    ).isExactlyInstanceOf(OutOfStockException.class);
+    ).isExactlyInstanceOf(InsufficientStockException.class);
   }
 
   @ParameterizedTest(name = "#{index} - Run test with args={0}")
   @ValueSource(ints = {50, 1})
   void testIncreaseQuantityBy_validNewQuantity_itemInStock_returnUpdatedObject(int augend)
-      throws OutOfStockException {
+      throws InsufficientStockException {
     CartLineItem cartLineItem = new CartLineItem(RANDOM_PRODUCT);
     cartLineItem.increaseQuantityBy(INITIAL_CART_ITEM_QUANTITY, PRODUCT_QUANTITY_IN_STOCK);
     cartLineItem.increaseQuantityBy(augend, PRODUCT_QUANTITY_IN_STOCK);
@@ -47,7 +47,7 @@ class CartLineItemTest {
   }
 
   @Test
-  void testSubTotal_validValues_returnValidTotal() throws OutOfStockException {
+  void testSubTotal_validValues_returnValidTotal() throws InsufficientStockException {
     CartLineItem cartLineItem = new CartLineItem(RANDOM_PRODUCT);
     cartLineItem.increaseQuantityBy(INITIAL_CART_ITEM_QUANTITY, PRODUCT_QUANTITY_IN_STOCK);
     Price subTotal = cartLineItem.subTotal();

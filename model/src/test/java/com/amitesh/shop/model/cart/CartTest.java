@@ -26,7 +26,7 @@ class CartTest {
   private SoftAssertions softly;
 
   @Test
-  void testAddProduct_givenEmptyCart_addTwoProducts_productsAreInCart() throws OutOfStockException {
+  void testAddProduct_givenEmptyCart_addTwoProducts_productsAreInCart() throws InsufficientStockException {
     Cart cart = emptyCartForRandomCustomer();
 
     Product product1 = createTestProduct(euros(12, 99), PRODUCT_QUANTITY_IN_STOCK);
@@ -51,7 +51,7 @@ class CartTest {
 
   @Test
   void testAddProduct_givenEmptyCart_addTwoProducts_validNumberOfItemsAndSubTotal()
-      throws OutOfStockException {
+      throws InsufficientStockException {
     Cart cart = emptyCartForRandomCustomer();
 
     Product product1 = createTestProduct(euros(12, 99), PRODUCT_QUANTITY_IN_STOCK);
@@ -71,7 +71,7 @@ class CartTest {
 
     ThrowingCallable invocation = () -> cart.addProduct(product, 200);
 
-    assertThatExceptionOfType(OutOfStockException.class)
+    assertThatExceptionOfType(InsufficientStockException.class)
         .isThrownBy(invocation)
         .satisfies(ex -> assertThat(ex.getItemsInStock()).isEqualTo(product.itemsInStock()));
   }
