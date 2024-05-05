@@ -11,4 +11,47 @@
 
   <artifactId>adapter</artifactId>
 
+  <dependencies>
+    <!-- Adding dependency of core application module -->
+    <dependency>
+      <groupId>com.amitesh</groupId>
+      <artifactId>application</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- Jakarta RESTful Web Services is required to implement REST Adapters in absence of Spring boot -->
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
+      <version>4.0.0</version>
+    </dependency>
+
+    <!-- To use the "attached test JAR" and helper classes from the "model" module -->
+    <dependency>
+      <groupId>com.amitesh</groupId>
+      <artifactId>model</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <!-- To create an "attached test JAR" to be able to use this module's helper test classes in other modules -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven.jar.plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

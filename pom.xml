@@ -23,6 +23,8 @@
     <junit.jupiter.version>5.10.2</junit.jupiter.version>
     <assertj.version>3.25.3</assertj.version>
     <mockito.version>5.11.0</mockito.version>
+
+    <maven.jar.plugin.version>3.4.1</maven.jar.plugin.version>
   </properties>
 
   <!-- For auto generating methods like getter/setter -->
