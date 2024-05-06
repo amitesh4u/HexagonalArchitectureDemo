@@ -30,6 +30,7 @@
     <rest.assured.version>5.4.0</rest.assured.version>
     <resteasy.jackson2.provider.version>6.2.8.Final</resteasy.jackson2.provider.version>
     <resteasy.undertow.version>6.2.8.Final</resteasy.undertow.version>
+    <archunit.junit5.version>1.3.0</archunit.junit5.version>
   </properties>
 
   <!-- For auto generating methods like getter/setter -->

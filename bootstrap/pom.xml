@@ -34,6 +34,33 @@
       <version>${resteasy.jackson2.provider.version}</version>
       <scope>runtime</scope>
     </dependency>
+
+    <!-- To validate the defined dependency rule say adapters only access ports and not the domain services directly. -->
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit5</artifactId>
+      <version>${archunit.junit5.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Test scope -->
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${rest.assured.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- To use the "attached test JAR" from the "adapter" module -->
+    <dependency>
+      <groupId>com.amitesh</groupId>
+      <artifactId>adapter</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
 </project>
