@@ -16,7 +16,7 @@ public final class CartsControllerAssertions {
 
   public static void assertThatResponseIsCart(Response response, Cart cart) {
     assertThat(response.statusCode()).isEqualTo(OK.getStatusCode());
-    System.out.println(response.getBody().prettyPrint());
+
     JsonPath json = response.jsonPath();
 
     int size = cart.lineItems().size();

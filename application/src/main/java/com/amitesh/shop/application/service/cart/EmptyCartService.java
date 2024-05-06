@@ -17,6 +17,6 @@ public class EmptyCartService implements EmptyCartUseCase {
     if (null == customerId) {
       throw new IllegalArgumentException("'customerId' must not be null");
     }
-    cartRepository.deleteById(customerId);
+    cartRepository.deleteByCustomerId(customerId);
   }
 }

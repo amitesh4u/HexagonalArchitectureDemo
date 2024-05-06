@@ -29,14 +29,14 @@ class EmptyCartServiceTest {
         .isExactlyInstanceOf(IllegalArgumentException.class)
         .hasMessage("'customerId' must not be null");
 
-    verify(cartRepository, never()).deleteById(any());
+    verify(cartRepository, never()).deleteByCustomerId(any());
   }
 
   @Test
   void testEmptyCart_invokesDeleteOnThePersistencePort() {
     emptyCartService.emptyCart(TEST_CUSTOMER_ID);
 
-    verify(cartRepository).deleteById(TEST_CUSTOMER_ID);
+    verify(cartRepository).deleteByCustomerId(TEST_CUSTOMER_ID);
   }
 
 }
