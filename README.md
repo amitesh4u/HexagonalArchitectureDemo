@@ -2,17 +2,15 @@
 
 This project contains a simple Java/Spring Boot application implemented according to hexagonal architecture in multiple steps.
 
-## Technologies used
+## Technologies used - Step 1
 * **JDK 21** - Core language
-* **Spring boot 3.2.5** - Application framework
 * **Junit5** - Unit Testing
 * **Mockito** - Mocking objects while Unit testing
 * **AssertJ** - Simple assertion style while Unit testing
 * **Lombok** - Auto generates boilerplate code for POJOs
-* **Hibernate** - Persistence Framework
-* **MySql** - Database 
-* **Jacoco** - Testing Code Coverage
-* **Sonar** - Analyze bugs and issues
+* **RESTful Web Services (JAX-RS)** - To implement REST Adapters
+* **Undertow** - Web server
+
 
 ## Important Plugins for Intellij
 * HTTP Client - Required to run sample http commands from document/sample-requests.http (Step 1,2)
@@ -48,7 +46,7 @@ The application mimics a simplified online store with following functionalities:
 The application will be developed in following steps:
 
 * Step 1 - Hexagonal Architecture without any application framework say Spring. The code will only use JDK 21, RESTEasy and Undertow (lightweight server).
-* Step 2 - Replace In-Memory Database with JPA and MySQL
+* Step 2 - Replace In-Memory Database with JPA and MySQL without changing Application module
 * Step 3 - Add [Spring Boot](https://spring.io/projects/spring-boot/) framework
 
 The source code has four modules:
