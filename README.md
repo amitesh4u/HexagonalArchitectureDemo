@@ -15,10 +15,10 @@ This project contains a simple Java/Spring Boot application implemented accordin
 * **Sonar** - Analyze bugs and issues
 
 ## Important Plugins for Intellij
-* HTTP Client - Required to run sample http commands from document/sample-requests.http
+* HTTP Client - Required to run sample http commands from document/sample-requests.http (Step 1,2)
 * JUnit
 * Lombok
-* Jakarta EE: RESTful Web Services (JAX-RS)
+* Jakarta EE: RESTful Web Services (JAX-RS) (Step 1,2)
 
 
 ## What is a Hexagonal Architecture?
@@ -48,7 +48,7 @@ The application mimics a simplified online store with following functionalities:
 The application will be developed in following steps:
 
 * Step 1 - Hexagonal Architecture without any application framework say Spring. The code will only use JDK 21, RESTEasy and Undertow (lightweight server).
-* Step 2 - Replace In-Memory Database to MySql
+* Step 2 - Replace In-Memory Database with JPA and MySQL
 * Step 3 - Add [Spring Boot](https://spring.io/projects/spring-boot/) framework
 
 The source code has four modules:
