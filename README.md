@@ -79,3 +79,13 @@ Image source :www.happycoders.eu
 * **@Getter/@Setter** - Generates getter/setter methods for the fields
 * **@ToString** - Generates a toString method for the class
 * **@EqualsAndHashCode** - Generates hashCode and equals implementations from the fields of your object
+
+
+## How to run
+* Based on the System property value of '**persistence**' key (_'inmemory'/'mysql'_) we can run the application with 
+* **InMemory DB** - Data will persist till the application is running
+* **MySql DB** - We can either run a local MySql server (**DB-_shop_, Root Pwd-_test_**) or run a Docker container
+
+_docker run --name hexagon-mysql -d -p3306:3306 -e MYSQL_DATABASE=shop -e MYSQL_ROOT_PASSWORD=test mysql:8.1_
+* The **'persistence'** Key value is used in _RestEasyUndertowShopApplication.initPersistenceAdapters()_
+* You can invoke HTTP commands from '**documents/sample-requests.http**' directly from Intellij

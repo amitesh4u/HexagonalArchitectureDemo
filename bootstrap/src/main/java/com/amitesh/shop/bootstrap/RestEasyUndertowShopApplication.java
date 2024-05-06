@@ -6,6 +6,9 @@ import com.amitesh.shop.adapter.in.rest.cart.GetCartController;
 import com.amitesh.shop.adapter.in.rest.product.FindProductsController;
 import com.amitesh.shop.adapter.out.persistence.inmemory.InMemoryCartRepository;
 import com.amitesh.shop.adapter.out.persistence.inmemory.InMemoryProductRepository;
+import com.amitesh.shop.adapter.out.persistence.jpa.EntityManagerFactoryFactory;
+import com.amitesh.shop.adapter.out.persistence.jpa.JpaCartRepository;
+import com.amitesh.shop.adapter.out.persistence.jpa.JpaProductRepository;
 import com.amitesh.shop.application.port.in.cart.AddToCartUseCase;
 import com.amitesh.shop.application.port.in.cart.EmptyCartUseCase;
 import com.amitesh.shop.application.port.in.cart.GetCartUseCase;
@@ -16,6 +19,7 @@ import com.amitesh.shop.application.service.cart.AddToCartService;
 import com.amitesh.shop.application.service.cart.EmptyCartService;
 import com.amitesh.shop.application.service.cart.GetCartService;
 import com.amitesh.shop.application.service.product.FindProductsService;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.ws.rs.core.Application;
 import java.util.Set;
 
@@ -37,8 +41,30 @@ public class RestEasyUndertowShopApplication extends Application {
   }
 
   private void initPersistenceAdapters() {
+    String persistence = System.getProperty("persistence", "mysql");
+    switch (persistence) {
+      case "inmemory" -> initInMemoryAdapters();
+      case "mysql" -> initMySqlAdapters();
+      default -> throw new IllegalArgumentException(
+          "Invalid 'persistence' property: '%s' (allowed: 'inmemory', 'mysql')"
+              .formatted(persistence));
+    }
+  }
+
+  private void initInMemoryAdapters() {
     cartRepository = new InMemoryCartRepository();
     productRepository = new InMemoryProductRepository();
+  }
+
+  /* The EntityManagerFactory doesn't need to get closed before the application is stopped */
+  @SuppressWarnings("PMD.CloseResource")
+  private void initMySqlAdapters() {
+    EntityManagerFactory entityManagerFactory =
+        EntityManagerFactoryFactory.createMySqlEntityManagerFactory(
+            "jdbc:mysql://localhost:3306/shop", "root", "test");
+
+    cartRepository = new JpaCartRepository(entityManagerFactory);
+    productRepository = new JpaProductRepository(entityManagerFactory);
   }
 
   private AddToCartController addToCartController() {

@@ -50,6 +50,23 @@
       <version>${jakarta.persistence.api.version}</version>
     </dependency>
 
+    <!-- The Undertow web server combined with the RESTEasy library -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-undertow</artifactId>
+      <version>${resteasy.undertow.version}</version>
+      <exclusions>
+        <!-- Conflicts with io.smallrye:jandex, a dependency present in Hibernate Core too.
+              This creates issue while creating Entity manager object for Jpa Repositories.
+              Another way to solve the issue is to put this dependency in the end of the dependency list say after
+        -->
+        <exclusion>
+          <groupId>org.jboss</groupId>
+          <artifactId>jandex</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <!-- For Integration testing of JPA Repository -->
     <dependency>
       <groupId>org.hibernate.orm</groupId>
@@ -85,14 +102,6 @@
       <version>${testcontainers.mysql.version}</version>
     </dependency>
 
-    <!-- NOTE: Keep resteasy-undertow after other dependencies else it will fail creating Entity manager object while testing Jpa Repositories -->
-    <!-- The Undertow web server combined with the RESTEasy library -->
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-undertow</artifactId>
-      <version>${resteasy.undertow.version}</version>
-    </dependency>
-
     <!-- To use the "attached test JAR" from the "model" module -->
     <dependency>
       <groupId>com.amitesh</groupId>
@@ -110,6 +119,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven.jar.plugin.version}</version>
         <executions>
           <execution>
             <goals>
