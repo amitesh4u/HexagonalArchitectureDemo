@@ -42,4 +42,14 @@ public class Cart {
     return lineItems.values().stream().map(CartLineItem::subTotal).reduce(Price::add).orElse(null);
   }
 
+  /**
+   * Should be used to Recreate cart without verifying the stock.
+   * That can be done while updating the Cart or during Checkout verification
+   * @param product Product to add in the cart
+   * @param quantity Quantity of product to add
+   */
+  public void recreateCart(final Product product, final int quantity) {
+    CartLineItem cartLineItem = new CartLineItem(product, quantity);
+    lineItems.put(product.id(), cartLineItem);
+  }
 }

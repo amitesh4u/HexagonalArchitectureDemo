@@ -1,5 +1,6 @@
 package com.amitesh.shop.adapter.out.persistence.inmemory;
 
+import com.amitesh.shop.adapter.out.persistence.TestProducts;
 import com.amitesh.shop.application.port.out.persistence.ProductRepository;
 import com.amitesh.shop.model.product.Product;
 import com.amitesh.shop.model.product.ProductId;

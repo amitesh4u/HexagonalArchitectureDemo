@@ -2,7 +2,6 @@ package com.amitesh.shop.adapter.out.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.amitesh.shop.adapter.out.persistence.inmemory.TestProducts;
 import com.amitesh.shop.application.port.out.persistence.ProductRepository;
 import com.amitesh.shop.model.product.Product;
 import com.amitesh.shop.model.product.ProductId;

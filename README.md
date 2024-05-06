@@ -2,23 +2,26 @@
 
 This project contains a simple Java/Spring Boot application implemented according to hexagonal architecture in multiple steps.
 
-## Technologies used
+## Technologies used - Step 2
 * **JDK 21** - Core language
-* **Spring boot 3.2.5** - Application framework
 * **Junit5** - Unit Testing
 * **Mockito** - Mocking objects while Unit testing
 * **AssertJ** - Simple assertion style while Unit testing
 * **Lombok** - Auto generates boilerplate code for POJOs
+* **RESTful Web Services (JAX-RS)** - To implement REST Adapters
+* **Undertow** - Web server
 * **Hibernate** - Persistence Framework
 * **MySql** - Database 
-* **Jacoco** - Testing Code Coverage
-* **Sonar** - Analyze bugs and issues
+* **TestContainers** - A framework that allows us to launch a MySQL database as a Docker container from tests.
+* **Docker** - To run MySQL as container. Just install Docker and done
+
 
 ## Important Plugins for Intellij
 * HTTP Client - Required to run sample http commands from document/sample-requests.http (Step 1,2)
 * JUnit
 * Lombok
 * Jakarta EE: RESTful Web Services (JAX-RS) (Step 1,2)
+* Jakarta EE: Persistence (JPA) (Step 2)
 
 
 ## What is a Hexagonal Architecture?

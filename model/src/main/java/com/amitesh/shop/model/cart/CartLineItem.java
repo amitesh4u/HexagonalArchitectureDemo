@@ -2,6 +2,7 @@ package com.amitesh.shop.model.cart;
 
 import com.amitesh.shop.model.price.Price;
 import com.amitesh.shop.model.product.Product;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
+@AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode

@@ -1,4 +1,4 @@
-package com.amitesh.shop.adapter.out.persistence.inmemory;
+package com.amitesh.shop.adapter.out.persistence;
 
 import com.amitesh.shop.model.price.Price;
 import com.amitesh.shop.model.product.Product;
