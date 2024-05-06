@@ -25,6 +25,11 @@
     <mockito.version>5.11.0</mockito.version>
 
     <maven.jar.plugin.version>3.4.1</maven.jar.plugin.version>
+
+    <jakarta.ws.rs.api.version>4.0.0</jakarta.ws.rs.api.version>
+    <rest.assured.version>5.4.0</rest.assured.version>
+    <resteasy.jackson2.provider.version>6.2.8.Final</resteasy.jackson2.provider.version>
+    <resteasy.undertow.version>6.2.8.Final</resteasy.undertow.version>
   </properties>
 
   <!-- For auto generating methods like getter/setter -->
