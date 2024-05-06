@@ -11,4 +11,29 @@
 
   <artifactId>bootstrap</artifactId>
 
+  <dependencies>
+
+    <!-- Adding dependency of adapter module -->
+    <dependency>
+      <groupId>com.amitesh</groupId>
+      <artifactId>adapter</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- The Undertow web server combined with the RESTEasy library -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-undertow</artifactId>
+      <version>${resteasy.undertow.version}</version>
+    </dependency>
+
+    <!-- A RESTEasy module for converting Java objects to JSON (and vice versa) -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson2-provider</artifactId>
+      <version>${resteasy.jackson2.provider.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+
 </project>

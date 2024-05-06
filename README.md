@@ -4,7 +4,7 @@ This project contains a simple Java/Spring Boot application implemented accordin
 
 ## Technologies used
 * **JDK 21** - Core language
-* **Spring boot 3** - Application framework
+* **Spring boot 3.2.5** - Application framework
 * **Junit5** - Unit Testing
 * **Mockito** - Mocking objects while Unit testing
 * **AssertJ** - Simple assertion style while Unit testing
@@ -13,6 +13,12 @@ This project contains a simple Java/Spring Boot application implemented accordin
 * **MySql** - Database 
 * **Jacoco** - Testing Code Coverage
 * **Sonar** - Analyze bugs and issues
+
+## Important Plugins for Intellij
+* HTTP Client - Required to run sample http commands from document/sample-requests.http
+* JUnit
+* Lombok
+* Jakarta EE: RESTful Web Services (JAX-RS)
 
 
 ## What is a Hexagonal Architecture?
