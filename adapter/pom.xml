@@ -20,74 +20,26 @@
       <version>${project.version}</version>
     </dependency>
 
-    <!-- Jakarta RESTful Web Services is required to implement REST Adapters in absence of Spring boot -->
+    <!-- Spring dependencies -->
     <dependency>
-      <groupId>jakarta.ws.rs</groupId>
-      <artifactId>jakarta.ws.rs-api</artifactId>
-      <version>${jakarta.ws.rs.api.version}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
 
-    <!-- Integration testing scope -->
-    <!-- Allows to make HTTP calls from integration tests -->
+    <!-- For in-memory database as MySQL expects a real implementation -->
     <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
-      <version>${rest.assured.version}</version>
-      <scope>test</scope>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
     </dependency>
-
-    <!-- A RESTEasy module for converting Java objects to JSON (and vice versa) -->
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-jackson2-provider</artifactId>
-      <version>${resteasy.jackson2.provider.version}</version>
-    </dependency>
-
-    <!-- To implement the JPA classes -->
-    <dependency>
-      <groupId>jakarta.persistence</groupId>
-      <artifactId>jakarta.persistence-api</artifactId>
-      <version>${jakarta.persistence.api.version}</version>
-    </dependency>
-
-    <!-- The Undertow web server combined with the RESTEasy library -->
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-undertow</artifactId>
-      <version>${resteasy.undertow.version}</version>
-      <exclusions>
-        <!-- Conflicts with io.smallrye:jandex, a dependency present in Hibernate Core too.
-              This creates issue while creating Entity manager object for Jpa Repositories.
-              Another way to solve the issue is to put this dependency at the end of the dependency list say after
-        -->
-        <exclusion>
-          <groupId>org.jboss</groupId>
-          <artifactId>jandex</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <!-- For Integration testing of JPA Repository -->
-    <dependency>
-      <groupId>org.hibernate.orm</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>${hibernate.core.version}</version>
-    </dependency>
-
-    <!-- Required by Hibernate at runtime -->
-    <dependency>
-      <groupId>org.hibernate.validator</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>${hibernate.validator.version}</version>
-    </dependency>
-
-    <!-- Required by Hibernate at runtime -->
-    <dependency>
-      <groupId>jakarta.el</groupId>
-      <artifactId>jakarta.el-api</artifactId>
-      <version>${jakarta.el.api.version}</version>
-    </dependency>
-
     <!-- Required at runtime as a JDBC driver  -->
     <dependency>
       <groupId>com.mysql</groupId>
@@ -95,6 +47,19 @@
       <version>${mysql.connector.j.version}</version>
     </dependency>
 
+    <!-- Test scope -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Allows to make HTTP calls from integration tests -->
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${rest.assured.version}</version>
+      <scope>test</scope>
+    </dependency>
     <!-- To launch a MySQL database from within the integration tests via Docker -->
     <dependency>
       <groupId>org.testcontainers</groupId>

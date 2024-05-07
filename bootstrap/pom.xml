@@ -20,21 +20,11 @@
       <version>${project.version}</version>
     </dependency>
 
-    <!-- The Undertow web server combined with the RESTEasy library -->
+    <!-- Test scope -->
     <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-undertow</artifactId>
-      <version>${resteasy.undertow.version}</version>
-      <exclusions>
-        <!-- Conflicts with io.smallrye:jandex, a dependency present in Hibernate Core too.
-              This creates issue while creating Entity manager object for Jpa Repositories.
-              Another way to solve the issue is to put this dependency at the end of the dependency list say after
-        -->
-        <exclusion>
-          <groupId>org.jboss</groupId>
-          <artifactId>jandex</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <!-- To validate the defined dependency rule say adapters only access ports and not the domain services directly. -->
@@ -44,48 +34,12 @@
       <version>${archunit.junit5.version}</version>
       <scope>test</scope>
     </dependency>
-
-    <!-- Test scope -->
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <version>${rest.assured.version}</version>
       <scope>test</scope>
     </dependency>
-
-
-    <!-- A RESTEasy module for converting Java objects to JSON (and vice versa) -->
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-jackson2-provider</artifactId>
-      <version>${resteasy.jackson2.provider.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- To launch the application with Hibernate and MySql support -->
-    <dependency>
-      <groupId>org.hibernate.orm</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>${hibernate.core.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- Required by Hibernate at runtime -->
-    <dependency>
-      <groupId>org.hibernate.validator</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>${hibernate.validator.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- Required by Hibernate at runtime -->
-    <dependency>
-      <groupId>jakarta.el</groupId>
-      <artifactId>jakarta.el-api</artifactId>
-      <version>${jakarta.el.api.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-
     <!-- Required at runtime as a JDBC driver  -->
     <dependency>
       <groupId>com.mysql</groupId>
@@ -105,5 +59,14 @@
     </dependency>
 
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
