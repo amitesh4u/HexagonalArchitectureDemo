@@ -10,16 +10,15 @@ import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.InsufficientStockException;
 import com.amitesh.shop.model.customer.CustomerId;
 import com.amitesh.shop.model.product.ProductId;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Path("/carts")
-@Produces(MediaType.APPLICATION_JSON)
+@RestController
+@RequestMapping("/carts")
 public class AddToCartController {
 
   private final AddToCartUseCase addToCartUseCase;
@@ -28,12 +27,11 @@ public class AddToCartController {
     this.addToCartUseCase = addToCartUseCase;
   }
 
-  @POST
-  @Path("/{customerId}/line-items")
+  @PostMapping("/{customerId}/line-items")
   public CartWebModel addLineItem(
-      @PathParam("customerId") String customerIdString,
-      @QueryParam("productId") String productIdString,
-      @QueryParam("quantity") int quantity) {
+      @PathVariable("customerId") String customerIdString,
+      @RequestParam("productId") String productIdString,
+      @RequestParam("quantity") int quantity) {
     CustomerId customerId = parseCustomerId(customerIdString);
     ProductId productId = parseProductId(productIdString);
 
@@ -42,10 +40,10 @@ public class AddToCartController {
       return CartWebModel.fromDomainModel(cart);
     } catch (ProductNotFoundException e) {
       throw clientErrorException(
-          Response.Status.BAD_REQUEST, "The requested product does not exist");
+          HttpStatus.BAD_REQUEST, "The requested product does not exist");
     } catch (InsufficientStockException e) {
       throw clientErrorException(
-          Response.Status.BAD_REQUEST,
+          HttpStatus.BAD_REQUEST,
           "Only %d items in stock".formatted(e.getItemsInStock()));
     }
   }
