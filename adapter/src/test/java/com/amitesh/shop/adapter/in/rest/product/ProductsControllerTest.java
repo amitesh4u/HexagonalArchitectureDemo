@@ -2,64 +2,32 @@ package com.amitesh.shop.adapter.in.rest.product;
 
 import static com.amitesh.shop.adapter.in.rest.helper.ControllerTestHelper.TEST_PRODUCT_1;
 import static com.amitesh.shop.adapter.in.rest.helper.ControllerTestHelper.TEST_PRODUCT_2;
-import static com.amitesh.shop.adapter.in.rest.helper.HttpTestHelper.TEST_PORT;
 import static com.amitesh.shop.adapter.in.rest.helper.HttpTestHelper.assertThatResponseIsError;
 import static com.amitesh.shop.adapter.in.rest.helper.ProductsControllerAssertions.assertThatResponseIsProductList;
 import static io.restassured.RestAssured.given;
-import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import com.amitesh.shop.application.port.in.product.FindProductsUseCase;
 import com.amitesh.shop.model.product.Product;
 import io.restassured.response.Response;
-import jakarta.ws.rs.core.Application;
 import java.util.List;
-import java.util.Set;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 
-/**
- * Single Test class for all Product operations since Undertow server takes time and memory to start and run.
- * Will be broken into separate Test classes for each Controller with Spring Boot
- */
-@ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test-with-mysql")
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 class ProductsControllerTest {
 
-  private static final FindProductsUseCase findProductsUseCase = mock(FindProductsUseCase.class);
+  @LocalServerPort
+  private Integer port;
 
-  private static UndertowJaxrsServer server;
-
-  @BeforeAll
-  static void init() {
-    server =
-        new UndertowJaxrsServer()
-            .setPort(TEST_PORT)
-            .start()
-            .deploy(
-                new Application() {
-                  @Override
-                  public Set<Object> getSingletons() {
-                    return Set.of(new FindProductsController(findProductsUseCase));
-                  }
-                });
-  }
-
-  @AfterAll
-  static void stop() {
-    server.stop();
-  }
-
-  @BeforeEach
-  void resetMocks() {
-    reset(findProductsUseCase);
-  }
+  @MockBean
+  private FindProductsUseCase findProductsUseCase;
 
   @Test
   void testFindProducts_givenAQueryAndAListOfProducts_requestsProductsViaQueryAndReturnsThem() {
@@ -70,7 +38,7 @@ class ProductsControllerTest {
 
     Response response =
         given()
-            .port(TEST_PORT)
+            .port(port)
             .queryParam("query", query)
             .get("/products")
             .then()
@@ -82,7 +50,7 @@ class ProductsControllerTest {
 
   @Test
   void testFindProducts_givenANullQuery_returnsError() {
-    Response response = given().port(TEST_PORT).get("/products").then().extract().response();
+    Response response = given().port(port).get("/products").then().extract().response();
 
     assertThatResponseIsError(response, BAD_REQUEST, "Missing 'query'");
   }
@@ -95,7 +63,7 @@ class ProductsControllerTest {
 
     Response response =
         given()
-            .port(TEST_PORT)
+            .port(port)
             .queryParam("query", query)
             .get("/products")
             .then()

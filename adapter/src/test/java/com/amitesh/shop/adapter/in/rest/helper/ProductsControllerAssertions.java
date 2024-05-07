@@ -1,8 +1,8 @@
 package com.amitesh.shop.adapter.in.rest.helper;
 
 
-import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.OK;
 
 import com.amitesh.shop.model.product.Product;
 import io.restassured.path.json.JsonPath;
@@ -15,7 +15,7 @@ public final class ProductsControllerAssertions {
   }
 
   public static void assertThatResponseIsProduct(Response response, Product product) {
-    assertThat(response.statusCode()).isEqualTo(OK.getStatusCode());
+    assertThat(response.statusCode()).isEqualTo(OK.value());
 
     JsonPath json = response.jsonPath();
 
@@ -23,7 +23,7 @@ public final class ProductsControllerAssertions {
   }
 
   public static void assertThatResponseIsProductList(Response response, List<Product> products) {
-    assertThat(response.statusCode()).isEqualTo(OK.getStatusCode());
+    assertThat(response.statusCode()).isEqualTo(OK.value());
 
     JsonPath json = response.jsonPath();
 

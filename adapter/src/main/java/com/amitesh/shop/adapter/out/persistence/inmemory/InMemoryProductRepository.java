@@ -9,8 +9,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
 
+@ConditionalOnProperty(name = "persistence", havingValue = "inmemory", matchIfMissing = true)
+@Repository
 public class InMemoryProductRepository implements ProductRepository {
+
   private final Map<ProductId, Product> products = new ConcurrentHashMap<>();
 
   public InMemoryProductRepository() {

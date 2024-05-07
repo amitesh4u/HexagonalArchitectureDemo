@@ -16,9 +16,9 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class AbstractCartRepositoryTest<
-    T extends CartRepository, U extends ProductRepository> {
+public abstract class AbstractCartRepositoryTest {
 
   private static final Product TEST_PRODUCT_1 = createTestProduct(euros(19, 99),
       PRODUCT_QUANTITY_IN_STOCK);
@@ -27,7 +27,11 @@ public abstract class AbstractCartRepositoryTest<
 
   private static final AtomicInteger CUSTOMER_ID_SEQUENCE_GENERATOR = new AtomicInteger();
 
-  private T cartRepository;
+  @Autowired
+  private CartRepository cartRepository;
+
+  @Autowired
+  private ProductRepository productRepository;
 
   private static CustomerId createUniqueCustomerId() {
     return new CustomerId(CUSTOMER_ID_SEQUENCE_GENERATOR.incrementAndGet());
@@ -35,19 +39,13 @@ public abstract class AbstractCartRepositoryTest<
 
   @BeforeEach
   void initRepositories() {
-    cartRepository = createCartRepository();
     persistTestProducts();
   }
 
-  protected abstract T createCartRepository();
-
   private void persistTestProducts() {
-    U productRepository = createProductRepository();
     productRepository.save(TEST_PRODUCT_1);
     productRepository.save(TEST_PRODUCT_2);
   }
-
-  protected abstract U createProductRepository();
 
   @Test
   void testFindByCustomerId_givenACustomerIdWithNoExistingCart_returnsAnEmptyCart() {

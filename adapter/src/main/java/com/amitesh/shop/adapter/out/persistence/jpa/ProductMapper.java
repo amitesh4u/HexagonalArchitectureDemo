@@ -5,7 +5,6 @@ import com.amitesh.shop.model.product.Product;
 import com.amitesh.shop.model.product.ProductId;
 import java.util.Currency;
 import java.util.List;
-import java.util.Optional;
 
 final class ProductMapper {
 
@@ -20,10 +19,6 @@ final class ProductMapper {
     jpaEntity.setItemsInStock(product.itemsInStock());
 
     return jpaEntity;
-  }
-
-  static Optional<Product> toModelEntityOptional(ProductJpaEntity jpaEntity) {
-    return Optional.ofNullable(jpaEntity).map(ProductMapper::toModelEntity);
   }
 
   static Product toModelEntity(ProductJpaEntity jpaEntity) {

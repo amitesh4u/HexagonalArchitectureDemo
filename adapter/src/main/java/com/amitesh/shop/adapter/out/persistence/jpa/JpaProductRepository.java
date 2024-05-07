@@ -4,55 +4,45 @@ import com.amitesh.shop.adapter.out.persistence.TestProducts;
 import com.amitesh.shop.application.port.out.persistence.ProductRepository;
 import com.amitesh.shop.model.product.Product;
 import com.amitesh.shop.model.product.ProductId;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
+import jakarta.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+@ConditionalOnProperty(name = "persistence", havingValue = "mysql")
+@Repository
 public class JpaProductRepository implements ProductRepository {
 
-  private final EntityManagerFactory entityManagerFactory;
+  private final JpaProductSpringDataRepository springDataRepository;
 
-  public JpaProductRepository(EntityManagerFactory entityManagerFactory) {
-    this.entityManagerFactory = entityManagerFactory;
-    createTestProducts();
+  public JpaProductRepository(JpaProductSpringDataRepository springDataRepository) {
+    this.springDataRepository = springDataRepository;
   }
 
+  @PostConstruct
   private void createTestProducts() {
     TestProducts.TEST_PRODUCTS.forEach(this::save);
   }
 
   @Override
-  public void save(Product product) {
-    try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-      entityManager.getTransaction().begin();
-      entityManager.merge(ProductMapper.toJpaEntity(product));
-      entityManager.getTransaction().commit();
-    }
+  @Transactional
+  public void save(final Product product) {
+    springDataRepository.save(ProductMapper.toJpaEntity(product));
   }
 
   @Override
-  public Optional<Product> findById(ProductId productId) {
-    try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-      ProductJpaEntity jpaEntity = entityManager.find(ProductJpaEntity.class, productId.value());
-      return ProductMapper.toModelEntityOptional(jpaEntity);
-    }
+  @Transactional
+  public Optional<Product> findById(final ProductId productId) {
+    Optional<ProductJpaEntity> productJpaEntity = springDataRepository.findById(productId.value());
+    return productJpaEntity.map(ProductMapper::toModelEntity);
   }
 
   @Override
-  public List<Product> findByNameOrDescription(String queryString) {
-    try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-      TypedQuery<ProductJpaEntity> query =
-          entityManager
-              .createQuery(
-                  "from ProductJpaEntity where name like :query or description like :query",
-                  ProductJpaEntity.class)
-              .setParameter("query", "%" + queryString + "%");
-
-      List<ProductJpaEntity> entities = query.getResultList();
-
-      return ProductMapper.toModelEntities(entities);
-    }
+  @Transactional
+  public List<Product> findByNameOrDescription(final String queryString) {
+    List<ProductJpaEntity> entities = springDataRepository.findByNameOrDescriptionLike("%" + queryString + "%");
+    return ProductMapper.toModelEntities(entities);
   }
 }

@@ -7,19 +7,13 @@ import com.amitesh.shop.model.product.Product;
 import com.amitesh.shop.model.product.ProductId;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class AbstractProductRepositoryTest<T extends ProductRepository> {
+public abstract class AbstractProductRepositoryTest {
 
-  private T productRepository;
-
-  @BeforeEach
-  void initRepository() {
-    productRepository = createProductRepository();
-  }
-
-  protected abstract T createProductRepository();
+  @Autowired
+  private ProductRepository productRepository;
 
   @Test
   void testFindById_givenATestProductId_returnsATestProduct() {

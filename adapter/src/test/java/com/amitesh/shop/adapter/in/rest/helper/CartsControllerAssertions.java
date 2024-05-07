@@ -1,7 +1,7 @@
 package com.amitesh.shop.adapter.in.rest.helper;
 
-import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.OK;
 
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.CartLineItem;
@@ -15,7 +15,7 @@ public final class CartsControllerAssertions {
   }
 
   public static void assertThatResponseIsCart(Response response, Cart cart) {
-    assertThat(response.statusCode()).isEqualTo(OK.getStatusCode());
+    assertThat(response.statusCode()).isEqualTo(OK.value());
 
     JsonPath json = response.jsonPath();
 

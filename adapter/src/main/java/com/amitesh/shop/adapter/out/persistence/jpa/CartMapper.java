@@ -3,13 +3,13 @@ package com.amitesh.shop.adapter.out.persistence.jpa;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.CartLineItem;
 import com.amitesh.shop.model.customer.CustomerId;
-import java.util.Optional;
 
 final class CartMapper {
 
-  private CartMapper() {}
+  private CartMapper() {
+  }
 
-  static CartJpaEntity toJpaEntity(Cart cart) {
+  static CartJpaEntity toJpaEntity(final Cart cart) {
     CartJpaEntity cartJpaEntity = new CartJpaEntity();
     cartJpaEntity.setCustomerId(cart.id().value());
 
@@ -19,7 +19,7 @@ final class CartMapper {
     return cartJpaEntity;
   }
 
-  static CartLineItemJpaEntity toJpaEntity(CartJpaEntity cartJpaEntity, CartLineItem lineItem) {
+  static CartLineItemJpaEntity toJpaEntity(final CartJpaEntity cartJpaEntity, final CartLineItem lineItem) {
     ProductJpaEntity productJpaEntity = new ProductJpaEntity();
     productJpaEntity.setId(lineItem.product().id().value());
 
@@ -31,11 +31,7 @@ final class CartMapper {
     return entity;
   }
 
-  static Optional<Cart> toModelEntityOptional(CartJpaEntity cartJpaEntity) {
-    if (cartJpaEntity == null) {
-      return Optional.empty();
-    }
-
+  static Cart toModelEntity(final CartJpaEntity cartJpaEntity) {
     CustomerId customerId = new CustomerId(cartJpaEntity.getCustomerId());
     Cart cart = new Cart(customerId);
 
@@ -45,7 +41,6 @@ final class CartMapper {
           lineItemJpaEntity.getQuantity());
     }
 
-    return Optional.of(cart);
+    return cart;
   }
-
 }
