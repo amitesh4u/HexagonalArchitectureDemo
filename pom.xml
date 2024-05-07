@@ -45,6 +45,10 @@
     <jakarta.el.api.version>6.0.0</jakarta.el.api.version>
     <mysql.connector.j.version>8.4.0</mysql.connector.j.version>
     <testcontainers.mysql.version>1.19.7</testcontainers.mysql.version>
+
+    <!-- Validations -->
+    <maven.checkstyle.plugin.version>3.3.1</maven.checkstyle.plugin.version>
+    <maven.checkstyle.version>10.16.0</maven.checkstyle.version>
   </properties>
 
   <!-- For auto generating methods like getter/setter. Provided scope (shared by all modules)  -->
@@ -91,4 +95,48 @@
     </dependency>
   </dependencies>
 
+  <build>
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-compiler-plugin</artifactId>-->
+<!--        <version>${maven.compiler.plugin.version}</version>-->
+<!--      </plugin>-->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-surefire-plugin</artifactId>-->
+<!--        <version>${maven.surefire.plugin.version}</version>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
+
+    <pluginManagement>
+      <plugins>
+        <!-- Validate code style with Checkstyle -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven.checkstyle.plugin.version}</version>
+          <configuration>
+            <configLocation>./rules/google_checks.xml</configLocation>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <!-- Version must be upgraded regularly for new set of rules -->
+              <version>${maven.checkstyle.version}</version>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <phase>verify</phase>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>
