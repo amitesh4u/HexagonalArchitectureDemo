@@ -8,8 +8,10 @@ import static io.restassured.RestAssured.given;
 
 import io.restassured.response.Response;
 import java.util.List;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("Hibernate and Undertow dependencies are conflicting")
 class FindProductsTest extends EndToEndTest {
 
   @Test

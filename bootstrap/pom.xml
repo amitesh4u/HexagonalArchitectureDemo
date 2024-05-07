@@ -28,21 +28,13 @@
       <exclusions>
         <!-- Conflicts with io.smallrye:jandex, a dependency present in Hibernate Core too.
               This creates issue while creating Entity manager object for Jpa Repositories.
-              Another way to solve the issue is to put this dependency in the end of the dependency list say after
+              Another way to solve the issue is to put this dependency at the end of the dependency list say after
         -->
         <exclusion>
           <groupId>org.jboss</groupId>
           <artifactId>jandex</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-
-    <!-- A RESTEasy module for converting Java objects to JSON (and vice versa) -->
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-jackson2-provider</artifactId>
-      <version>${resteasy.jackson2.provider.version}</version>
-      <scope>runtime</scope>
     </dependency>
 
     <!-- To validate the defined dependency rule say adapters only access ports and not the domain services directly. -->
@@ -61,11 +53,21 @@
       <scope>test</scope>
     </dependency>
 
+
+    <!-- A RESTEasy module for converting Java objects to JSON (and vice versa) -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson2-provider</artifactId>
+      <version>${resteasy.jackson2.provider.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- To launch the application with Hibernate and MySql support -->
     <dependency>
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>${hibernate.core.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Required by Hibernate at runtime -->
@@ -73,6 +75,7 @@
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>${hibernate.validator.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Required by Hibernate at runtime -->
@@ -80,6 +83,7 @@
       <groupId>jakarta.el</groupId>
       <artifactId>jakarta.el-api</artifactId>
       <version>${jakarta.el.api.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Required at runtime as a JDBC driver  -->
@@ -87,6 +91,7 @@
       <groupId>com.mysql</groupId>
       <artifactId>mysql-connector-j</artifactId>
       <version>${mysql.connector.j.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- To use the "attached test JAR" from the "adapter" module -->

@@ -58,7 +58,7 @@
       <exclusions>
         <!-- Conflicts with io.smallrye:jandex, a dependency present in Hibernate Core too.
               This creates issue while creating Entity manager object for Jpa Repositories.
-              Another way to solve the issue is to put this dependency in the end of the dependency list say after
+              Another way to solve the issue is to put this dependency at the end of the dependency list say after
         -->
         <exclusion>
           <groupId>org.jboss</groupId>
