@@ -2,14 +2,13 @@
 
 This project contains a simple Java/Spring Boot application implemented according to hexagonal architecture in multiple steps.
 
-## Technologies used - Step 2
+## Technologies used - Step 3
 * **JDK 21** - Core language
 * **Junit5** - Unit Testing
 * **Mockito** - Mocking objects while Unit testing
 * **AssertJ** - Simple assertion style while Unit testing
 * **Lombok** - Auto generates boilerplate code for POJOs
 * **RESTful Web Services (JAX-RS)** - To implement REST Adapters
-* **Undertow** - Web server
 * **Hibernate** - Persistence Framework
 * **MySql** - Database 
 * **TestContainers** - A framework that allows us to launch a MySQL database as a Docker container from tests.
@@ -22,6 +21,7 @@ This project contains a simple Java/Spring Boot application implemented accordin
 * Lombok
 * Jakarta EE: RESTful Web Services (JAX-RS) (Step 1,2)
 * Jakarta EE: Persistence (JPA) (Step 2)
+* Spring DATA
 
 
 ## What is a Hexagonal Architecture?
@@ -82,10 +82,10 @@ Image source :www.happycoders.eu
 
 
 ## How to run
+* **Spring Boot Profile** - Pass the Spring boot profile **_mysql_** while running the app as -Dspring.profiles.active=mysql. Default is In-Memory
 * Based on the System property value of '**persistence**' key (_'inmemory'/'mysql'_) we can run the application with 
 * **InMemory DB** - Data will persist till the application is running
 * **MySql DB** - We can either run a local MySql server (**DB-_shop_, Root Pwd-_test_**) or run a Docker container
-
 _docker run --name hexagon-mysql -d -p3306:3306 -e MYSQL_DATABASE=shop -e MYSQL_ROOT_PASSWORD=test mysql:8.1_
-* The **'persistence'** Key value is used in _RestEasyUndertowShopApplication.initPersistenceAdapters()_
 * You can invoke HTTP commands from '**documents/sample-requests.http**' directly from Intellij
+

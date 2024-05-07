@@ -1,6 +1,5 @@
 package com.amitesh.shop.bootstrap.integration;
 
-import static com.amitesh.shop.adapter.in.rest.helper.HttpTestHelper.TEST_PORT;
 import static com.amitesh.shop.adapter.in.rest.helper.ProductsControllerAssertions.assertThatResponseIsProductList;
 import static com.amitesh.shop.adapter.out.persistence.TestProducts.COMPUTER_MONITOR;
 import static com.amitesh.shop.adapter.out.persistence.TestProducts.MONITOR_DESK_MOUNT;
@@ -8,11 +7,18 @@ import static io.restassured.RestAssured.given;
 
 import io.restassured.response.Response;
 import java.util.List;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 
-@Disabled("Hibernate and Undertow dependencies are conflicting")
-class FindProductsTest extends EndToEndTest {
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test-with-mysql")
+class FindProductsTest {
+
+  @LocalServerPort
+  private Integer port;
 
   @Test
   void testFindProducts_givenTestProductsAndAQuery_returnsMatchingProducts() {
@@ -20,7 +26,7 @@ class FindProductsTest extends EndToEndTest {
 
     Response response =
         given()
-            .port(TEST_PORT)
+            .port(port)
             .queryParam("query", query)
             .get("/products")
             .then()
