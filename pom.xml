@@ -159,6 +159,86 @@
               <formats>XML</formats>
             </configuration>
           </execution>
+          <!-- Module level coverage. Build will fail if coverage % is less than the threshold
+               Its a better option to maintain code quality at developer level.
+                ex: Rule violated for bundle model: instructions covered ratio is 0.40,
+                but expected minimum is 0.90
+                Preferably use: mvn clean verify to check before build
+               -->
+          <execution>
+            <id>coverage-check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <!-- Keep it false to get an aggregated failure warnings in place of build failures
+              at each module violation. Ex:
+              Rule violated for bundle model: instructions covered ratio is 0.40, but expected minimum is 0.90
+              Rule violated for bundle bootstrap: instructions covered ratio is 0.00, but expected minimum is 0.90
+              -->
+              <haltOnFailure>false</haltOnFailure>
+              <rules>
+                <!--Module:model-->
+                <rule>
+                  <element>BUNDLE</element>
+                  <includes>
+                    <include>model</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>40%</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <!--Module:application-->
+                <rule>
+                  <element>BUNDLE</element>
+                  <includes>
+                    <include>application</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>100%</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <!--Module:adapter-->
+                <rule>
+                  <element>BUNDLE</element>
+                  <includes>
+                    <include>adapter</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>97%</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <!--Module:bootstrap-->
+                <rule>
+                  <element>BUNDLE</element>
+                  <includes>
+                    <include>bootstrap</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <!-- Ignoring Unit test coverage for this module
+                      as we are doing End-To-End testing here -->
+                      <minimum>0%</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>
