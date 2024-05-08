@@ -57,6 +57,10 @@
     <spotbugs.owasp.findsecbugs.plugin.version>1.13.0</spotbugs.owasp.findsecbugs.plugin.version>
     <spotbugs.version>4.8.5</spotbugs.version>
     <jacoco.maven.plugin.version>0.8.12</jacoco.maven.plugin.version>
+
+    <!-- Sonar Configurations -->
+    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
   </properties>
 
   <!-- For auto generating methods like getter/setter. Provided scope (shared by all modules)  -->
