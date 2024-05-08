@@ -49,6 +49,13 @@
     <!-- Validations -->
     <maven.checkstyle.plugin.version>3.3.1</maven.checkstyle.plugin.version>
     <maven.checkstyle.version>10.16.0</maven.checkstyle.version>
+    <spotless.maven.plugin.version>2.43.0</spotless.maven.plugin.version>
+    <google.java.format.version>1.22.0</google.java.format.version>
+    <pmd.version>7.1.0</pmd.version>
+    <maven.pmd.plugin.version>3.22.0</maven.pmd.plugin.version>
+    <spotbugs.maven.plugin.version>4.8.5.0</spotbugs.maven.plugin.version>
+    <spotbugs.owasp.findsecbugs.plugin.version>1.13.0</spotbugs.owasp.findsecbugs.plugin.version>
+    <spotbugs.version>4.8.5</spotbugs.version>
   </properties>
 
   <!-- For auto generating methods like getter/setter. Provided scope (shared by all modules)  -->
@@ -96,47 +103,137 @@
   </dependencies>
 
   <build>
-<!--    <plugins>-->
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-compiler-plugin</artifactId>-->
-<!--        <version>${maven.compiler.plugin.version}</version>-->
-<!--      </plugin>-->
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-surefire-plugin</artifactId>-->
-<!--        <version>${maven.surefire.plugin.version}</version>-->
-<!--      </plugin>-->
-<!--    </plugins>-->
-
-    <pluginManagement>
-      <plugins>
-        <!-- Validate code style with Checkstyle -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>${maven.checkstyle.plugin.version}</version>
-          <configuration>
-            <configLocation>./rules/google_checks.xml</configLocation>
-          </configuration>
-          <dependencies>
-            <dependency>
-              <groupId>com.puppycrawl.tools</groupId>
-              <artifactId>checkstyle</artifactId>
-              <!-- Version must be upgraded regularly for new set of rules -->
-              <version>${maven.checkstyle.version}</version>
-            </dependency>
-          </dependencies>
-          <executions>
-            <execution>
-              <goals>
-                <goal>check</goal>
-              </goals>
-              <phase>verify</phase>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>${spotless.maven.plugin.version}</version>
+        <configuration>
+          <!-- https://github.com/diffplug/spotless/tree/main/plugin-maven#java -->
+          <java>
+            <includes>
+              <include>src/main/java/**/*.java</include> <!-- Check application code -->
+              <include>src/test/java/**/*.java</include> <!-- Check application tests code -->
+            </includes>
+            <removeUnusedImports/>
+            <importOrder/> <!-- standard import order java|javax,org,com,com.diffplug,,\#com.diffplug,\# -->
+            <googleJavaFormat>
+              <!-- Latest version can be found here: https://github.com/google/google-java-format/releases -->
+              <version>${google.java.format.version}</version>
+              <style>GOOGLE</style>
+            </googleJavaFormat>
+            <lineEndings>UNIX</lineEndings>
+          </java>
+          <!-- It will fail the build so run it manually unless you are ready to fix -->
+          <skip>true</skip>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>validate</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>code-inspection</id>
+      <build>
+        <plugins>
+
+          <!-- Validate code style with Checkstyle -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>${maven.checkstyle.plugin.version}</version>
+            <configuration>
+              <configLocation>./rules/google_checks.xml</configLocation>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>com.puppycrawl.tools</groupId>
+                <artifactId>checkstyle</artifactId>
+                <!-- Version must be upgraded regularly for new set of rules -->
+                <version>${maven.checkstyle.version}</version>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- Validate code issues with PMD -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <version>${maven.pmd.plugin.version}</version>
+            <configuration>
+              <!-- Optional custom ruleset -->
+              <rulesets>
+                <ruleset>./rules/pmd-ruleset-default.xml</ruleset>
+              </rulesets>
+              <failOnViolation>false</failOnViolation>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>net.sourceforge.pmd</groupId>
+                <artifactId>pmd-core</artifactId>
+                <version>${pmd.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>net.sourceforge.pmd</groupId>
+                <artifactId>pmd-java</artifactId>
+                <version>${pmd.version}</version>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>pmd</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- Validate code issues with SpotBugs -->
+          <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <version>${spotbugs.maven.plugin.version}</version>
+            <configuration>
+              <failOnError>false</failOnError>
+              <excludeFilterFile>./rules/spotbugs-exclude.xml</excludeFilterFile>
+              <!-- To detect Security bugs -->
+              <plugins>
+                <plugin>
+                  <groupId>com.h3xstream.findsecbugs</groupId>
+                  <artifactId>findsecbugs-plugin</artifactId>
+                  <version>${spotbugs.owasp.findsecbugs.plugin.version}</version>
+                </plugin>
+              </plugins>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>spotbugs</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
