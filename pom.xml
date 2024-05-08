@@ -56,6 +56,7 @@
     <spotbugs.maven.plugin.version>4.8.5.0</spotbugs.maven.plugin.version>
     <spotbugs.owasp.findsecbugs.plugin.version>1.13.0</spotbugs.owasp.findsecbugs.plugin.version>
     <spotbugs.version>4.8.5</spotbugs.version>
+    <jacoco.maven.plugin.version>0.8.12</jacoco.maven.plugin.version>
   </properties>
 
   <!-- For auto generating methods like getter/setter. Provided scope (shared by all modules)  -->
@@ -133,6 +134,30 @@
               <goal>check</goal>
             </goals>
             <phase>validate</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Analyze code coverage with JaCoCo -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <configuration>
+              <formats>XML</formats>
+            </configuration>
           </execution>
         </executions>
       </plugin>
