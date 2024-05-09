@@ -32,6 +32,11 @@ public class InMemoryProductRepository implements ProductRepository {
   }
 
   @Override
+  public List<Product> findAll() {
+    return products.values().stream().toList();
+  }
+
+  @Override
   public Optional<Product> findById(ProductId productId) {
     return Optional.ofNullable(products.get(productId));
   }

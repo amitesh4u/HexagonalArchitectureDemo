@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface FindProductsUseCase {
 
+  List<Product> findAll();
+
   /* Query must be at least 2 characters long */
   List<Product> findByNameOrDescription(String query);
 }

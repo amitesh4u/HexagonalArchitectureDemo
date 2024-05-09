@@ -1,5 +1,6 @@
 package com.amitesh.shop.adapter.out.persistence;
 
+import static com.amitesh.shop.adapter.out.persistence.TestProducts.TEST_PRODUCTS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.amitesh.shop.application.port.out.persistence.ProductRepository;
@@ -14,6 +15,14 @@ public abstract class AbstractProductRepositoryTest {
 
   @Autowired
   private ProductRepository productRepository;
+
+  @Test
+  void testFindAll_returnsAllTestProducts() {
+
+    List<Product> products = productRepository.findAll();
+
+    assertThat(products).containsAll(TEST_PRODUCTS);
+  }
 
   @Test
   void testFindById_givenATestProductId_returnsATestProduct() {

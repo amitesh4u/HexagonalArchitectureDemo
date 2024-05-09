@@ -34,6 +34,13 @@ public class JpaProductRepository implements ProductRepository {
 
   @Override
   @Transactional
+  public List<Product> findAll() {
+    List<ProductJpaEntity> entities = springDataRepository.findAll();
+    return ProductMapper.toModelEntities(entities);
+  }
+
+  @Override
+  @Transactional
   public Optional<Product> findById(final ProductId productId) {
     Optional<ProductJpaEntity> productJpaEntity = springDataRepository.findById(productId.value());
     return productJpaEntity.map(ProductMapper::toModelEntity);

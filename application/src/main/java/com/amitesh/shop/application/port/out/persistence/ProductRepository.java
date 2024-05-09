@@ -9,7 +9,10 @@ public interface ProductRepository {
 
   void save(Product product);
 
+  List<Product> findAll();
+
   Optional<Product> findById(ProductId productId);
 
   List<Product> findByNameOrDescription(String query);
+
 }

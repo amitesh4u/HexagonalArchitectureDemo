@@ -14,11 +14,15 @@ public class FindProductsService implements FindProductsUseCase {
   }
 
   @Override
+  public List<Product> findAll() {
+    return productRepository.findAll();
+  }
+
+  @Override
   public List<Product> findByNameOrDescription(String query) {
     if (null == query || query.length() < 2) {
       throw new IllegalArgumentException("'query' must be at least two characters long");
     }
-
     return productRepository.findByNameOrDescription(query);
   }
 }
