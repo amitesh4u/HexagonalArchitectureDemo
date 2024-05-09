@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #Status: The level of internal Log4j events that should be logged to
+	the console. # MonitorInterval: The minimum amount of time, in seconds, that
+	must elapse before the file configuration is checked for changes. -->
+<Configuration status="WARN" monitorInterval="5">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            <!--
+              %style{…}{colorname}: This will print the text in the first bracket pair (…) in a given color (colorname).
+              %highlight{…}{FATAL=colorname, …}: This is similar to the ‘style’ variable. But a different color can be given for each log level.
+            -->
+            TS=%style{%d{yyyy-MM-dd
+            HH:mm:ss.SSS}}{yellow}|Env=${sys:spring.profiles.active}|PID=${sys:pid}|APP=${bundle:application-${sys:spring.profiles.active}:appId}|Level=%highlight{%level}{ERROR=red, WARN=yellow, INFO=green, DEBUG=blue}|Hostname=${hostName}|Thread=%t|Class=%c{1}|Method=%M|CODE=%msg|EX=%throwable
+            %n
+        </Property>
+        <!-- The Directory should be outside project folder and fetched based on Environment property file -->
+        <Property name="baseDir">logs</Property>
+    </Properties>
+    <MapFilter onMatch="DENY" onMismatch="ACCEPT">
+        <KeyValuePair key="msg" value="No IO while shut down." />
+    </MapFilter>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+        </Console>
+
+        <!-- Rolling File Appender -->
+        <RollingRandomAccessFile  name="RollingRAFAppender" fileName="${baseDir}/app.log"
+          filePattern="${baseDir}/app-%d{yyyy-MM-dd-HH}-%i.log.gz"><!-- Don't use any temporary sub-folder say with 'Date' as Delete policy
+				will delete the files but leave the folder as is -->
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="5 MB" /><!--  Note the space in between -->
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${baseDir}" maxDepth="1">
+                    <IfFileName glob="app-*.log.gz">
+                        <IfAny>
+                            <IfAccumulatedFileSize exceeds="2 GB" /><!-- Consider the compressed file size. Size unit in KB has issues -->
+                            <!-- <IfAccumulatedFileCount exceeds="10" /> -->
+                            <!-- <IfLastModified age="30d"> -->
+                        </IfAny>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <!-- The AsyncAppender can be set to a buffer of N log messages; after that, the buffer is flushed to the log file -->
+        <Async name="AsyncRollingRAFAppender"  bufferSize="100">
+            <AppenderRef ref="RollingRAFAppender" />
+        </Async>
+        <Async name="AsyncConsoleAppender">
+            <AppenderRef ref="ConsoleAppender" />
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.springframework.core" level="error">
+            <AppenderRef ref="RollingRAFAppender"/>
+        </Logger>
+        <!--
+			# Additivity: Gets or sets a value indicating if child loggers inherit their parent's appenders.
+			# immediateFlush: Asynchronous loggers and appenders will automatically flush at the end of a batch of events, even if immediateFlush is set to false.
+		-->
+        <!-- includeLocation will show method name (%M) in logs but its for reference here only
+        as fetching the information from stack trace is expensive and slow -->
+        <AsyncLogger name="com.amitesh.shop" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="AsyncRollingRAFAppender" />
+        </AsyncLogger>
+
+        <AsyncRoot level="info">
+            <AppenderRef ref="AsyncConsoleAppender" />
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

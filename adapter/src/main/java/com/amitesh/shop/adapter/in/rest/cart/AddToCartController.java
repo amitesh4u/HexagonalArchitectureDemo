@@ -10,6 +10,7 @@ import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.InsufficientStockException;
 import com.amitesh.shop.model.customer.CustomerId;
 import com.amitesh.shop.model.product.ProductId;
+import lombok.CustomLog;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/carts")
+@CustomLog
 public class AddToCartController {
 
   private final AddToCartUseCase addToCartUseCase;
@@ -35,16 +37,23 @@ public class AddToCartController {
     CustomerId customerId = parseCustomerId(customerIdString);
     ProductId productId = parseProductId(productIdString);
 
+    LOGGER.debug("Adding {} quantities of product {} to cart {}", quantity, productIdString, customerIdString);
+
     try {
       Cart cart = addToCartUseCase.addToCart(customerId, productId, quantity);
-      return CartWebModel.fromDomainModel(cart);
+      CartWebModel cartWebModel = CartWebModel.fromDomainModel(cart);
+
+      LOGGER.debug("Updated cart for {} is {}", customerIdString, cartWebModel);
+
+      return cartWebModel;
     } catch (ProductNotFoundException e) {
+      LOGGER.error("The requested product does not exist: " + productIdString);
       throw clientErrorException(
           HttpStatus.BAD_REQUEST, "The requested product does not exist");
     } catch (InsufficientStockException e) {
-      throw clientErrorException(
-          HttpStatus.BAD_REQUEST,
-          "Only %d items in stock".formatted(e.getItemsInStock()));
+      String message = "Only %d items in stock ".formatted(e.getItemsInStock());
+      LOGGER.error(message + " for product " + productIdString);
+      throw clientErrorException(HttpStatus.BAD_REQUEST, message);
     }
   }
 }

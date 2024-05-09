@@ -14,6 +14,7 @@
   <artifactId>HexagonalArchitectureDemo</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+
   <modules>
     <module>model</module>
     <module>application</module>
@@ -61,10 +62,12 @@
     <!-- Sonar Configurations -->
     <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
+    <!-- Logging configurations -->
+    <logging.disruptor.version>3.4.4</logging.disruptor.version>
   </properties>
 
-  <!-- For auto generating methods like getter/setter. Provided scope (shared by all modules)  -->
   <dependencies>
+    <!-- For auto generating methods like getter/setter. Provided scope (shared by all modules)  -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -105,6 +108,39 @@
       <version>${assertj.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- Exclude Spring Boot's Default Logging (Logback) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Logging dependencies -->
+    <!-- Implementation for Apache Log4J -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+    </dependency>
+
+    <!-- Add Log4j2 Dependency in Spring -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
+    </dependency>
+
+    <!-- Required for Async Logging with Log4j2 -->
+    <dependency>
+      <groupId>com.lmax</groupId>
+      <artifactId>disruptor</artifactId>
+      <version>${logging.disruptor.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>
