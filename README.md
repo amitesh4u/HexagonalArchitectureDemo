@@ -39,7 +39,7 @@ Alistair Cockburn introduced the hexagonal software architecture as follows
 * An Adapter is like a middleman who will control the communication between External entities and Application core via Ports. 
 
 
-<img src="documents/hexagonal-architecture-with-control-flow.png" alt="Hexagonal Architecture Modules" width="500"/>
+<img src="documents/hexagonal-architecture-with-control-flow.png" alt="Hexagonal Architecture Modules" width="600"/>
 
 Hexagonal architecture with control flow (www.happycoders.eu)
 
@@ -72,9 +72,9 @@ The source code has four modules:
 
 The following diagram shows the final hexagonal architecture of the application along with the source code modules.
 
-<img src="documents/hexagonal-architecture-modules-uml.png" alt="Hexagonal Architecture Modules UML diagram" width="500"/>
+<img src="documents/hexagonal-architecture-modules-uml.png" alt="Hexagonal Architecture Modules UML diagram" width="600"/>
 <br>
-<img src="documents/hexagonal-architecture-modules.png" alt="Hexagonal Architecture Modules" width="500"/>
+<img src="documents/hexagonal-architecture-modules.png" alt="Hexagonal Architecture Modules" width="600"/>
 
 Hexagonal Architecture modules (www.happycoders.eu)
 
