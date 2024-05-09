@@ -2,7 +2,7 @@
 
 This project contains a simple Java/Spring Boot application implemented according to hexagonal architecture in multiple steps.
 
-## Technologies used - Main branch
+## Technologies used
 * **JDK 21** - Core language
 * **Junit5** - Unit Testing
 * **Mockito** - Mocking objects while Unit testing
@@ -39,7 +39,8 @@ Alistair Cockburn introduced the hexagonal software architecture as follows
 * An Adapter is like a middleman who will control the communication between External entities and Application core via Ports. 
 
 
-![Hexagonal Architecture Modules](documents/hexagonal-architecture-with-control-flow.png)
+<img src="documents/hexagonal-architecture-with-control-flow.png" alt="Hexagonal Architecture Modules" width="500"/>
+
 Hexagonal architecture with control flow (www.happycoders.eu)
 
 # Application overview
@@ -71,10 +72,11 @@ The source code has four modules:
 
 The following diagram shows the final hexagonal architecture of the application along with the source code modules.
 
-![Modules](documents/hexagonal-architecture-modules-uml.png)
+<img src="documents/hexagonal-architecture-modules-uml.png" alt="Hexagonal Architecture Modules UML diagram" width="500"/>
+<br>
+<img src="documents/hexagonal-architecture-modules.png" alt="Hexagonal Architecture Modules" width="500"/>
 
-![Hexagonal Architecture Modules](documents/hexagonal-architecture-modules.png)
-Image source :www.happycoders.eu
+Hexagonal Architecture modules (www.happycoders.eu)
 
 ## Lombok annotations used in project
 * **@RequiredArgsConstructor** - Generates constructor that take one argument per final / non-nullfield
@@ -88,39 +90,54 @@ Image source :www.happycoders.eu
 * **@Getter/@Setter** - Generates getter/setter methods for the fields
 * **@ToString** - Generates a toString method for the class
 * **@EqualsAndHashCode** - Generates hashCode and equals implementations from the fields of your object
-* **@Slf4J** - Generates Logger object for the class
+* **@CustomLog** - Generates Custom Logger object for the class based on Logging library as defined in **_lombok.config_** file
+```
+lombok.log.custom.declaration = org.slf4j.Logger org.slf4j.LoggerFactory.getLogger(NAME)(TOPIC)
 
+```
 
 ## How to run
-* **Spring Boot Profile** - Pass the Spring boot profile **_mysql_** while running the app as -Dspring.profiles.active=mysql. Default is **_inmemory_**
+* **Spring Boot Profile** - Use the Spring boot profile **_mysql_** while running the app. Default is **_inmemory_**
+```
+-Dspring.profiles.active=mysql
+```
 * Based on the System property value of '**persistence**' key (_'inmemory'/'mysql'_) we can run the application with 
 * **InMemory DB** - Data will persist till the application is running
 * **MySql DB** - We can either run a local MySql server (**DB-_shop_, Root Pwd-_test_**) or run a Docker container
-* * _docker run --name hexagon-mysql -d -p3306:3306 -e MYSQL_DATABASE=shop -e MYSQL_ROOT_PASSWORD=test mysql:8.1_
+```
+docker run --name hexagon-mysql -d -p3306:3306 -e MYSQL_DATABASE=shop -e MYSQL_ROOT_PASSWORD=test mysql:8.1
+```
 * You can invoke HTTP commands from '**documents/sample-requests.http**' directly from Intellij
 
 ## Code analysis
 * **Spotless** - run **_mvn spotless:apply_** to auto reformat the code if there is any issue during build
 * **Static code analysis** - For Static code analysis with Spotbugs, PMD and Google Check style run
-
-**_mvn clean verify -Dspring.profiles.active=code-inspection -DskipTests=true_**
-
+```
+mvn clean verify -Dspring.profiles.active=code-inspection -DskipTests=true
+```
 ## Running SONAR from Zip file with JDK 17+ on your system
 * As per May 2024, Sonar supports up to JDK17 with some issues with ElasticSearch. 
 * So if you have any latest version of JDK installed then please install JDK 17 separately.
-* Create an Environment variable to point to the Java executable file of JDK17 
-* i.e. SONAR_JAVA_PATH/C:\Program Files\Java\jdk-17.0.1\bin\java.exe (Windows)
-* And run the StartSonar.bat ex- C:\sonarqube\bin\windows-x86-64\StartSonar.bat
+* Create an Environment variable to point to the Java executable file of JDK17 i.e. 
+```
+SONAR_JAVA_PATH = C:\Program Files\Java\jdk-17.0.1\bin\java.exe (Windows)
+```
+* And run the StartSonar.bat 
+```
+C:\sonarqube\bin\windows-x86-64\StartSonar.bat
+```
 * Please refer the https://docs.sonarsource.com/sonarqube/latest/try-out-sonarqube/ page for latest steps
 
 ## Running Sonar from docker image
 * If Docker is already installed on your system (as part of MySql TestContainers step)
 * Then just execute the following line and you are all set
-
-_docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest_
-
+```
+docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
+```
 ### After creating a Project and Token in SonarQube run this for report generation
-_mvn -Dsonar.projectKey=<<PROJECT_KEY>> -Dsonar.projectName='<<PROJECT_NAME' -Dsonar.host.url=http://localhost:9000 
--Dsonar.token=<<TOKEN_VALUE>> clean verify sonar:sonar_
+```
+mvn -Dsonar.projectKey=<<PROJECT_KEY>> -Dsonar.projectName='<<PROJECT_NAME>>' -Dsonar.host.url=http://localhost:9000 
+-Dsonar.token=<<TOKEN_VALUE>> clean verify sonar:sonar
+```
 
 
