@@ -2,26 +2,34 @@
 
 This project contains a simple Java/Spring Boot application implemented according to hexagonal architecture in multiple steps.
 
-## Technologies used - Step 3
+## Technologies used - Main branch
 * **JDK 21** - Core language
 * **Junit5** - Unit Testing
 * **Mockito** - Mocking objects while Unit testing
 * **AssertJ** - Simple assertion style while Unit testing
 * **Lombok** - Auto generates boilerplate code for POJOs
-* **RESTful Web Services (JAX-RS)** - To implement REST Adapters
-* **Hibernate** - Persistence Framework
+* **RESTful Web Services (JAX-RS)** - To implement REST Adapters (Step 1,2)
+* **Undertow** - Web server (Step 1,2)
+* **Jakarta Persistence (JPA)** - Java persistence specification api (Step 2)
+* **Hibernate** - Persistence Implementation Framework
 * **MySql** - Database 
 * **TestContainers** - A framework that allows us to launch a MySQL database as a Docker container from tests.
-* **Docker** - To run MySQL as container. Just install Docker and done
+* **Docker** - To run MySQL and Sonar as containers. Just install Docker Desktop and done
+* **Jacoco** - To analyze code coverage
+* **SonarQube** - To analyze ugs and issues
+* **Spotless** - To analyze and format the code
+* **Static Code Analysis** - By SpotBugs, PMD, Google Checkstyle (_If using Sonar then not req as most of the rules are now part of Sonar_)
+* **CustomLog** - Slf4j Logging support using Lombok CustomLog
+
 
 
 ## Important Plugins for Intellij
-* HTTP Client - Required to run sample http commands from document/sample-requests.http (Step 1,2)
-* JUnit
-* Lombok
-* Jakarta EE: RESTful Web Services (JAX-RS) (Step 1,2)
-* Jakarta EE: Persistence (JPA) (Step 2)
-* Spring DATA
+* **HTTP Client** - Required to run sample http commands from document/sample-requests.http (Step 1,2)
+* **JUnit**
+* **Lombok**
+* **Jakarta EE: RESTful Web Services (JAX-RS)** (Step 1,2)
+* **Jakarta EE: Persistence (JPA)** (Step 2)
+* **Spring DATA**
 
 
 ## What is a Hexagonal Architecture?
@@ -50,9 +58,10 @@ The application mimics a simplified online store with following functionalities:
 # Architecture Overview
 The application will be developed in following steps:
 
-* Step 1 - Hexagonal Architecture without any application framework say Spring. The code will only use JDK 21, RESTEasy and Undertow (lightweight server).
-* Step 2 - Replace In-Memory Database with JPA and MySQL
-* Step 3 - Add [Spring Boot](https://spring.io/projects/spring-boot/) framework
+* **Step 1** - Hexagonal Architecture without any application framework say Spring. The code will only use JDK 21, RESTEasy and Undertow (lightweight server).
+* **Step 2** - Replace In-Memory Database with JPA and MySQL
+* **Step 3** - Add [Spring Boot](https://spring.io/projects/spring-boot/) framework
+* **Final** - Add support of Logger, Sonar, Jacoco code coverage, Static code analysis i.e. Spotless, Spotbugs, Google checkstyle, PMD
 
 The source code has four modules:
 * `model` - It contains the domain models
@@ -79,6 +88,7 @@ Image source :www.happycoders.eu
 * **@Getter/@Setter** - Generates getter/setter methods for the fields
 * **@ToString** - Generates a toString method for the class
 * **@EqualsAndHashCode** - Generates hashCode and equals implementations from the fields of your object
+* **@Slf4J** - Generates Logger object for the class
 
 
 ## How to run
@@ -86,6 +96,31 @@ Image source :www.happycoders.eu
 * Based on the System property value of '**persistence**' key (_'inmemory'/'mysql'_) we can run the application with 
 * **InMemory DB** - Data will persist till the application is running
 * **MySql DB** - We can either run a local MySql server (**DB-_shop_, Root Pwd-_test_**) or run a Docker container
-_docker run --name hexagon-mysql -d -p3306:3306 -e MYSQL_DATABASE=shop -e MYSQL_ROOT_PASSWORD=test mysql:8.1_
+* * _docker run --name hexagon-mysql -d -p3306:3306 -e MYSQL_DATABASE=shop -e MYSQL_ROOT_PASSWORD=test mysql:8.1_
 * You can invoke HTTP commands from '**documents/sample-requests.http**' directly from Intellij
+
+## Code analysis
+* **Spotless** - run **_mvn spotless:apply_** to auto reformat the code if there is any issue during build
+* **Static code analysis** - For Static code analysis with Spotbugs, PMD and Google Check style run
+
+**_mvn clean verify -Dspring.profiles.active=code-inspection -DskipTests=true_**
+
+## Running SONAR from Zip file with JDK 17+ on your system
+* As per May 2024, Sonar supports up to JDK17 with some issues with ElasticSearch. 
+* So if you have any latest version of JDK installed then please install JDK 17 separately.
+* Create an Environment variable to point to the Java executable file of JDK17 
+* i.e. SONAR_JAVA_PATH/C:\Program Files\Java\jdk-17.0.1\bin\java.exe (Windows)
+* And run the StartSonar.bat ex- C:\sonarqube\bin\windows-x86-64\StartSonar.bat
+* Please refer the https://docs.sonarsource.com/sonarqube/latest/try-out-sonarqube/ page for latest steps
+
+## Running Sonar from docker image
+* If Docker is already installed on your system (as part of MySql TestContainers step)
+* Then just execute the following line and you are all set
+
+_docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest_
+
+### After creating a Project and Token in SonarQube run this for report generation
+_mvn -Dsonar.projectKey=<<PROJECT_KEY>> -Dsonar.projectName='<<PROJECT_NAME' -Dsonar.host.url=http://localhost:9000 
+-Dsonar.token=<<TOKEN_VALUE>> clean verify sonar:sonar_
+
 
