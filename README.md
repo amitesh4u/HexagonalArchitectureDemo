@@ -50,9 +50,10 @@ The application mimics a simplified online store with following functionalities:
 # Architecture Overview
 The application will be developed in following steps:
 
-* Step 1 - Hexagonal Architecture without any application framework say Spring. The code will only use JDK 21, RESTEasy and Undertow (lightweight server).
-* Step 2 - Replace In-Memory Database with JPA and MySQL
-* Step 3 - Add [Spring Boot](https://spring.io/projects/spring-boot/) framework
+* **Step 1** - Hexagonal Architecture without any application framework say Spring. The code will only use JDK 21, RESTEasy and Undertow (lightweight server).
+* **Step 2** - Replace In-Memory Database with JPA and MySQL
+* **Step 3** - Add [Spring Boot](https://spring.io/projects/spring-boot/) framework
+* **Final** - Add support of Logger, Sonar, Jacoco code coverage, Static code analysis i.e. Spotless, Spotbugs, Google checkstyle, PMD
 
 The source code has four modules:
 * `model` - It contains the domain models
@@ -82,7 +83,7 @@ Image source :www.happycoders.eu
 
 
 ## How to run
-* **Spring Boot Profile** - Pass the Spring boot profile **_mysql_** while running the app as -Dspring.profiles.active=mysql. Default is In-Memory
+* **Spring Boot Profile** - Pass the Spring boot profile **_mysql_** while running the app as -Dspring.profiles.active=mysql. Default is **_inmemory_**
 * Based on the System property value of '**persistence**' key (_'inmemory'/'mysql'_) we can run the application with 
 * **InMemory DB** - Data will persist till the application is running
 * **MySql DB** - We can either run a local MySql server (**DB-_shop_, Root Pwd-_test_**) or run a Docker container
