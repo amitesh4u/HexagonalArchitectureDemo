@@ -92,7 +92,7 @@ Image source :www.happycoders.eu
 
 
 ## How to run
-* **Spring Boot Profile** - Pass the Spring boot profile **_mysql_** while running the app as -Dspring.profiles.active=mysql. Default is In-Memory
+* **Spring Boot Profile** - Pass the Spring boot profile **_mysql_** while running the app as -Dspring.profiles.active=mysql. Default is **_inmemory_**
 * Based on the System property value of '**persistence**' key (_'inmemory'/'mysql'_) we can run the application with 
 * **InMemory DB** - Data will persist till the application is running
 * **MySql DB** - We can either run a local MySql server (**DB-_shop_, Root Pwd-_test_**) or run a Docker container
