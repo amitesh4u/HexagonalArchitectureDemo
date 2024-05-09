@@ -30,6 +30,22 @@ class ProductsControllerTest {
   private FindProductsUseCase findProductsUseCase;
 
   @Test
+  void testFindAllProducts_returnsAllProducts() {
+    List<Product> productList = List.of(TEST_PRODUCT_1, TEST_PRODUCT_2);
+    when(findProductsUseCase.findAll()).thenReturn(productList);
+
+    Response response =
+        given()
+            .port(port)
+            .get("/products/all")
+            .then()
+            .extract()
+            .response();
+
+    assertThatResponseIsProductList(response, productList);
+  }
+
+  @Test
   void testFindProducts_givenAQueryAndAListOfProducts_requestsProductsViaQueryAndReturnsThem() {
     String query = "foo";
     List<Product> productList = List.of(TEST_PRODUCT_1, TEST_PRODUCT_2);
