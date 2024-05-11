@@ -69,6 +69,7 @@
 
   <build>
     <plugins>
+      <!-- Dependency to package the application i.e. Jar, War -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
