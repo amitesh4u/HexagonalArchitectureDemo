@@ -20,7 +20,7 @@ This project contains a simple Java/Spring Boot application implemented accordin
 * **Spotless** - To analyze and format the code
 * **Static Code Analysis** - By SpotBugs, PMD, Google Checkstyle (_If using Sonar then not req as most of the rules are now part of Sonar_)
 * **CustomLog** - Slf4j Logging support using Lombok CustomLog
-
+* **Swagger** - OpenAPI which is the version 3 implementation for Spring Boot 3.x
 
 
 ## Important Plugins for Intellij
@@ -115,7 +115,7 @@ docker run --name hexagon-mysql -d -p3306:3306 -e MYSQL_DATABASE=shop -e MYSQL_R
 ```
 mvn clean verify -Dspring.profiles.active=code-inspection -DskipTests=true
 ```
-## Running SONAR from Zip file with JDK 17+ on your system
+## Running SONAR from Zip file with JDK 17+ on the system
 * As per May 2024, Sonar supports up to JDK17 with some issues with ElasticSearch. 
 * So if you have any latest version of JDK installed then please install JDK 17 separately.
 * Create an Environment variable to point to the Java executable file of JDK17 i.e. 
@@ -139,5 +139,9 @@ docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000
 mvn -Dsonar.projectKey=<<PROJECT_KEY>> -Dsonar.projectName='<<PROJECT_NAME>>' -Dsonar.host.url=http://localhost:9000 
 -Dsonar.token=<<TOKEN_VALUE>> clean verify sonar:sonar
 ```
+
+## Swagger Version 3 links
+* **Swagger UI** - http://localhost:8080/hexarchshop/swagger-ui/index.html
+* **Client Docs** - http://localhost:8080/hexarchshop/v3/api-docs
 
 
