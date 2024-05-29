@@ -19,7 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("test-with-mysql")
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class ProductsControllerTest {
 
