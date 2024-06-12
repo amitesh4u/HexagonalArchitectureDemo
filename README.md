@@ -78,6 +78,10 @@ The following diagram shows the final hexagonal architecture of the application 
 
 Hexagonal Architecture modules (www.happycoders.eu)
 
+## Business flow example - Add Item to Cart
+<img src="documents/AddToCartFlow.png" alt="Add Item to Cart flow" width="600"/>
+
+
 ## Lombok annotations used in project
 * **@RequiredArgsConstructor** - Generates constructor that take one argument per final / non-nullfield
 * **@AllArgsConstructor** - Generates constructor that take one argument for every field.
